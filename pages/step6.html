@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="vi" class="no-js usn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=2.0, user-scalable=yes, viewport-fit=cover" />
+    <title>Xem Hợp Đồng - FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</title>
+    
+    <!-- External CSS Bundles from index.html -->
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-ltr-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-small-header-01-sm-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:0) and (max-width:991px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/sitebuilder-css-large-header-07-lg-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen and (min-width:992px)" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-customs-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    <link href="https://www.fecredit.com.vn/sb/css-footer-bundle.css.ve71a07e0be8131442699d18627f92642a8170edc" media="screen" rel="stylesheet" />
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg" href="https://www-cdn.fecredit.com.vn/media/yienoinl/favicon-feonl-01.svg?width=32&height=32">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #00994F;
+        --primary-dark: #015C2E;
+        --primary-light: #9FE870;
+        --secondary-color: #f5f6f5;
+        --accent-color: #9FE870;
+      }
+      html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        background-color: var(--secondary-color);
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0;
+      }
+      
+      /* Site Structure */
+      #site {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+      }
+
+      /* Subheader */
+      #site-subheader {
+        background: #fff;
+        border-bottom: 1px solid #ECECEC;
+        padding: 8px 0;
+      }
+      
+      .sub-header-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      
+      .sub-header-list {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .sub-header-list li a {
+        color: #6b7280;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+      }
+      
+      .sub-header-list li a:hover {
+        color: var(--primary-color);
+      }
+      
+      .site-search-form {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .site-search-form input {
+        padding: 6px 12px;
+        border: 1px solid #ECECEC;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      
+      .site-search-form button {
+        padding: 6px 12px;
+        background: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      /* FE Credit Header */
+      #site-header {
+        background: #fff;
+        border-bottom: 1px solid #ECECEC;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 15px 0;
+      }
+      
+      #site-header .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      #logo a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        gap: 10px;
+      }
+      
+      #logo img {
+        height: 40px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+      
+      #logo span {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--primary-color);
+        display: none;
+      }
+      
+      .nav__menu {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .nav__menu li a {
+        color: #111827;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        transition: color 0.3s;
+      }
+      
+      .nav__menu li a:hover {
+        color: var(--primary-color);
+      }
+      
+      .hamburger {
+        display: none;
+        background: none;
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 8px;
+        cursor: pointer;
+      }
+      
+      .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: var(--primary-color);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+      
+      /* Legacy header for compatibility */
+      .fecredit-header {
+        display: none;
+      }
+      
+      @media (min-width: 992px) {
+        #logo span {
+          display: inline-block;
+        }
+      }
+      
+      /* Mobile Responsive - Fixed Sizes */
+      @media (max-width: 767px) {
+        /* Subheader Mobile */
+        #site-subheader {
+          padding: 6px 0;
+        }
+        
+        .sub-header-nav {
+          flex-direction: column;
+          gap: 8px;
+          padding: 0 12px;
+        }
+        
+        .sub-header-list {
+          flex-wrap: wrap;
+          gap: 12px;
+          font-size: 12px;
+        }
+        
+        .sub-header-list li a {
+          font-size: 12px;
+          padding: 4px 0;
+        }
+        
+        .site-search-form {
+          width: 100%;
+        }
+        
+        .site-search-form input {
+          flex: 1;
+          font-size: 14px;
+          padding: 8px 12px;
+          min-height: 36px;
+        }
+        
+        .site-search-form button {
+          min-width: 44px;
+          min-height: 36px;
+          padding: 8px 12px;
+        }
+
+        /* Header Mobile */
+        #site-header {
+          padding: 10px 0;
+        }
+        
+        #site-header .container {
+          padding: 0 12px;
+        }
+        
+        #logo img {
+          height: 32px;
+          max-width: 140px;
+        }
+        
+        .hamburger {
+          display: block;
+          min-width: 44px;
+          min-height: 44px;
+          padding: 10px;
+        }
+        
+        .hamburger span {
+          width: 22px;
+          height: 2.5px;
+        }
+
+        .nav__menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          box-shadow: 0 10px 30px rgba(0, 153, 79, 0.1);
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .nav__menu.show {
+          display: flex;
+        }
+
+        /* Container Mobile */
+        .container {
+          max-width: 100%;
+          padding: 12px;
+          margin: 0;
+          border-radius: 0;
+        }
+
+        .nav-tabs {
+          margin-bottom: 16px;
+          gap: 4px;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tabs .nav-link {
+          font-size: 11px;
+          padding: 6px 10px;
+          min-height: 36px;
+          white-space: nowrap;
+        }
+
+        .step-title {
+          font-size: 16px;
+          margin-bottom: 12px;
+        }
+
+        .step-description {
+          font-size: 13px;
+          margin-bottom: 16px;
+        }
+
+        #contractCanvas {
+          width: 100%;
+          max-width: 100%;
+          min-height: 600px;
+          border-radius: 8px;
+        }
+
+        .button-group {
+          flex-direction: column !important;
+          gap: 10px !important;
+          margin-top: 16px;
+        }
+
+        .button-group .btn {
+          width: 100% !important;
+          min-height: 48px !important;
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+
+        /* Footer Mobile */
+        .footer {
+          padding: 20px 12px;
+          font-size: 11px;
+          margin-top: 20px;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .footer-links a {
+          display: block;
+          margin: 4px 0;
+        }
+      }
+
+      @media (max-width: 991px) {
+        .sub-header-nav {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .site-search-form {
+          width: 100%;
+        }
+
+        .nav__menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #fff;
+          box-shadow: 0 10px 30px rgba(0, 153, 79, 0.1);
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .nav__menu.show {
+          display: flex;
+        }
+
+        .hamburger {
+          display: block;
+        }
+      }
+
+      /* Small Mobile (max-width: 480px) */
+      @media (max-width: 480px) {
+        .nav-tabs .nav-link {
+          font-size: 10px;
+          padding: 5px 8px;
+        }
+
+        .step-title {
+          font-size: 14px;
+        }
+
+        .step-description {
+          font-size: 12px;
+        }
+
+        #contractCanvas {
+          min-height: 500px;
+        }
+      }
+      
+      .header {
+        padding: 15px;
+        background-color: var(--primary-color);
+        border-bottom: 1px solid #ECECEC;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header img {
+        height: 35px;
+      }
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .header-icons i {
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+        transition: color 0.3s;
+      }
+      .header-icons i:hover {
+        color: var(--primary-light);
+      }
+      .container {
+        max-width: 90%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 25px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      /* Fixed container width for mobile */
+      @media (max-width: 767px) {
+        /* Prevent all elements from overflowing */
+        * {
+          max-width: 100% !important;
+        }
+
+        img {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
+        .container {
+          max-width: 100% !important;
+          width: 100% !important;
+          padding: 12px !important;
+          margin: 0 !important;
+        }
+      }
+      @media (min-width: 768px) {
+        .container {
+          max-width: 700px;
+          margin: 20px auto;
+        }
+      }
+      .nav-tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 25px;
+        margin-top: 0;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      /* Allow nav tabs to wrap on mobile */
+      @media (max-width: 767px) {
+        .nav-tabs {
+          flex-wrap: wrap !important;
+          gap: 6px !important;
+          justify-content: center !important;
+        }
+        
+        .nav-tabs .nav-link {
+          font-size: 11px !important;
+          padding: 6px 10px !important;
+          min-width: auto !important;
+          flex: 0 0 auto !important;
+        }
+      }
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-tabs .nav-item {
+        flex: 1;
+        text-align: center;
+      }
+      .nav-tabs .nav-link {
+        background-color: #d3d3d3;
+        color: #ffffff;
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: 500;
+        font-size: 14px;
+        width: 100%;
+        margin: 0 5px;
+        transition: background-color 0.3s;
+      }
+      .nav-tabs .nav-link.active {
+        background-color: var(--primary-color);
+        color: #ffffff;
+      }
+      .nav-tabs .nav-link:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+      .dropdown-menu {
+        min-width: 200px;
+      }
+      .step-title {
+        color: var(--primary-color);
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+      .step-description {
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #1a3c87;
+      }
+      #contractCanvas {
+        width: 100%;
+        max-width: 600px;
+        min-height: 850px;
+        margin: 20px auto;
+        display: block;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+      }
+
+      /* Fixed canvas size for mobile */
+      @media (max-width: 767px) {
+        #contractCanvas {
+          min-height: 500px !important;
+          max-width: 100% !important;
+          width: 100% !important;
+          height: auto !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #contractCanvas {
+          min-height: 400px !important;
+        }
+      }
+      #contractCanvas.loading {
+        opacity: 0.5;
+        background: url("https://via.placeholder.com/50x50?text=Loading") center
+          center no-repeat;
+      }
+      .btn-download {
+        background-color: #17a2b8;
+        color: white;
+      }
+      .btn-download:hover {
+        background-color: var(--primary-color);
+      }
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 4px 12px rgba(0, 153, 79, 0.3);
+      }
+      .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        margin-top: 20px;
+        font-size: 12px;
+      }
+      .footer-links a {
+        color: #b3cde0;
+        margin: 0 10px;
+        text-decoration: none;
+      }
+      .footer-links a:hover {
+        color: var(--primary-light);
+      }
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+      }
+      .button-group .btn {
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .divider-blue {
+        border-top: 1px solid #b3cde0;
+        margin: 15px 0;
+      }
+      .error-message {
+        color: #ff4d4f;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 5px;
+        padding: 6px;
+        background-color: #ffe6e6;
+        border-radius: 5px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Site -->
+    <div id="site">
+        <!-- Subheader -->
+        <div id="site-subheader">
+            <div class="container content">
+                <nav aria-label="" class="sub-header-nav secondary nav-dropdown navigation-dropdown-bg navigation-dropdown-bg-solid">
+                    <ul class="sub-header-list d-flex">
+                        <li>
+                            <span>
+                                <a href="../index.html">Về chúng tôi</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="https://feonline.fecredit.com.vn/" target="_blank" rel="noreferrer noopener">Về FE ONLINE 2.0</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <a href="#site-footer">Liên hệ</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <!--// Site search -->
+                    <div class="form site-search-form site-search" aria-label="">
+                        <form role="search" autocomplete="off" form-group="off" action="https://www.fecredit.com.vn/search/" method="get" name="searchForm">
+                            <div class="form-group">
+                                <input type="text" class="myInput form-control" name="search_field"
+                                       aria-label="" placeholder="Bạn cần tìm gì?"
+                                       value="">
+                            </div>
+                            <button id="search-button" type="submit" role="button"
+                                    aria-label=""
+                                    class="btn base-btn-bg base-btn-bg-solid base-btn-bg-hover-solid base-btn-text base-btn-borders btn-search">
+                                <span></span>
+                                <i aria-hidden="true" class="icon ti ti-search"></i>
+                                <p>Tìm kiếm</p>
+                            </button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header id="site-header" class="header-bg header-bg-solid" tabindex="-1">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="d-flex align-items-center nav-left">
+                        <div id="logo">
+                            <a href="../index.html" title="FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP" class="w-100">
+                                <img src="https://www-cdn.fecredit.com.vn/media/20ymppzv/fec-logo.svg" alt="FE CREDIT Logo"
+                                     style="object-fit: contain;width:100%">
+                                <span>FE CREDIT - VAY TIÊU DÙNG TÍN CHẤP</span>
+                            </a>
+                        </div>
+                        <!-- Main navigation -->
+                        <nav aria-label="" id="nav-menu"
+                             class="main nav__menu nav-dropdown align-items-center navigation-dropdown-bg navigation-dropdown-bg-solid">
+                            <ul class="nav__list">
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="../index.html">Trang Chủ</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="loan_registration.html">Đăng Ký Vay</a>
+                                    </span>
+                                </li>
+                                <li class="no-child">
+                                    <span>
+                                        <a class="nav__link d-flex align-items-center justify-content-start text-nowrap" href="#site-footer">Liên Hệ</a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main id="site-content" tabindex="-1">
+
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="step1.html">1. Nhập thông tin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="step4.html"
+            >2. Xác thực và xử lý</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="step6.html"
+            >3. Hoàn thành</a
+          >
+        </li>
+      </ul>
+
+      <div id="step6" class="mt-4">
+        <h5 class="step-title">Xem Hợp Đồng</h5>
+        <div class="error-message" id="formError"></div>
+        <p class="step-description">
+          Dưới đây là hợp đồng vay tín chấp của bạn. Vui lòng kiểm tra kỹ thông
+          tin.
+        </p>
+        <div class="image-section">
+          <canvas id="contractCanvas"></canvas>
+        </div>
+        <hr class="divider-blue" />
+          <div class="button-group">
+            <a href="step5.html" class="btn btn-secondary">QUAY LẠI</a>
+            <button id="downloadContractBtn" class="btn btn-download" disabled>
+              TẢI XUỐNG
+            </button>
+            <button
+              id="proceedToStep7Btn"
+              type="button"
+              class="btn btn-primary"
+              data-next-url="step7.html"
+              disabled
+            >
+              TIẾP TỤC
+            </button>
+          </div>
+      </div>
+    </div>
+
+        <!-- Footer -->
+        <footer id="footer" role="contentinfo" aria-label="Footer">
+            <p>Liên hệ: <a href="mailto:support@fecredit.com.vn">support@fecredit.com.vn</a> | Hotline: 1900-1234</p>
+            <p><a href="https://officialaccount.me/d/3932037504673339016?id=6e8c3a46ef03065d5f12&pageId=3932037504673339016">Hỗ trợ trò chuyện</a></p>
+            <p>Kết nối an toàn với SSL</p>
+            <img src="https://napthe.zalopay.vn/static/desktop/images/logos/PCI.svg" alt="PCI DSS" />
+            <img src="https://simg.zalopay.com.vn/zst/zlp-website/resources/images/footer/BCTLogo_1.png" alt="Bộ Công Thương" />
+            <p>Dữ liệu được mã hóa với SSL</p>
+            <p>© 2025 FE Credit Việt Nam. All Rights Reserved.</p>
+            <p>Địa chỉ: Tầng 12, Tòa nhà Vincom Center, 72 Lê Thánh Tôn, Quận 1, TP. Hồ Chí Minh</p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        let userData = {};
+        let canProceedToStep7 = false;
+        const ACTION_BUTTONS_SELECTOR = "#downloadContractBtn, #proceedToStep7Btn";
+
+        function setActionButtonsEnabled(enabled) {
+          $(ACTION_BUTTONS_SELECTOR).prop("disabled", !enabled);
+        }
+
+        function showFormMessage(message) {
+          const $formError = $("#formError");
+          if (!message) {
+            $formError.text("").hide();
+            return;
+          }
+          $formError.text(message).show();
+        }
+
+      function formatNumber(number) {
+        if (!number || number === "N/A" || number === 0) return "";
+        return Number(number).toLocaleString("vi-VN");
+      }
+
+      function splitDate(dateStr) {
+        if (
+          !dateStr ||
+          typeof dateStr !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(dateStr) ||
+          dateStr === "N/A"
+        ) {
+          return { day: "", month: "", year: "" };
+        }
+        const [year, month, day] = dateStr.split("-");
+        return { day: day || "", month: month || "", year: year || "" };
+      }
+
+      function calculateDueDate(disbursementDate, loanTerm) {
+        if (
+          !disbursementDate ||
+          !loanTerm ||
+          typeof disbursementDate !== "string" ||
+          !/^\d{4}-\d{2}-\d{2}$/.test(disbursementDate) ||
+          disbursementDate === "N/A"
+        ) {
+          return "";
+        }
+        const date = new Date(disbursementDate);
+        if (isNaN(date.getTime())) {
+          return "";
+        }
+        date.setMonth(date.getMonth() + parseInt(loanTerm));
+        if (isNaN(date.getTime())) {
+          return "";
+        }
+        return date.toISOString().split("T")[0];
+      }
+
+      function generateRandomCode(prefix) {
+        const randomNum = Math.floor(100000 + Math.random() * 900000);
+        return `${prefix}${randomNum}`;
+      }
+
+      function saveToLocalStorage() {
+        try {
+          const encryptedData = CryptoJS.AES.encrypt(
+            JSON.stringify(userData),
+            "fecredit-secret-key"
+          ).toString();
+          localStorage.setItem("userData", encryptedData);
+          // Data saved successfully
+        } catch (error) {
+          // Error saving userData
+          $("#formError").text("Lỗi lưu dữ liệu. Vui lòng thử lại.").show();
+        }
+      }
+
+        function loadUserData() {
+          canProceedToStep7 = false;
+          setActionButtonsEnabled(false);
+          try {
+            const storedData = localStorage.getItem("userData");
+            if (!storedData) {
+              showFormMessage("Không tìm thấy dữ liệu hồ sơ. Vui lòng quay lại.");
+              return;
+            }
+
+            userData = JSON.parse(
+              CryptoJS.AES.decrypt(storedData, "fecredit-secret-key").toString(
+                CryptoJS.enc.Utf8
+              )
+            );
+            // Loaded userData for Step 6
+
+            for (let key in userData) {
+              if (userData[key] === "N/A" || userData[key] === 0) {
+                userData[key] = "";
+              }
+            }
+
+            if (
+              userData.disbursementDate &&
+              !/^\d{4}-\d{2}-\d{2}$/.test(userData.disbursementDate)
+            ) {
+              // Invalid disbursementDate format - resetting
+              userData.disbursementDate = "";
+            }
+
+            if (!userData.isRegistered || !userData.fullName) {
+              showFormMessage(
+                "Không tìm thấy hồ sơ đã đăng ký. Vui lòng quay lại."
+              );
+              return;
+            }
+
+            canProceedToStep7 = true;
+            showFormMessage("");
+          } catch (error) {
+            // Error parsing userData
+            console.error("Không thể giải mã dữ liệu cũ:", error);
+            showFormMessage("Lỗi tải dữ liệu. Vui lòng quay lại.");
+          }
+        }
+
+        function renderCanvas(canvasId, imageUrl, fallbackUrl) {
+          const canvas = document.getElementById(canvasId);
+          if (!canvas) {
+            showFormMessage("Không tìm thấy khu vực hiển thị hợp đồng.");
+            setActionButtonsEnabled(false);
+            return;
+          }
+
+          const ctx = canvas.getContext("2d");
+          const primaryImage = new Image();
+          primaryImage.crossOrigin = "Anonymous";
+
+          const drawContract = (imageElement) => {
+            canvas.classList.remove("loading");
+            canvas.width = 2480;
+            canvas.height = 3508;
+            ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+
+            canvasFields.forEach((field) => {
+              const value = field.value || "";
+              if (value && field.x >= 0 && field.y >= 0) {
+                ctx.font = field.font;
+                ctx.fillStyle = field.color;
+                ctx.fillText(value, field.x, field.y);
+              }
+            });
+
+            tickFields.forEach((tick) => {
+              if (tick.condition) {
+                ctx.font = tick.font;
+                ctx.fillStyle = tick.color;
+                ctx.fillText(tick.symbol, tick.x, tick.y);
+              }
+            });
+
+            if (canProceedToStep7) {
+              setActionButtonsEnabled(true);
+            }
+          };
+
+          const handleImageFailure = (message) => {
+            canvas.classList.remove("loading");
+            ctx.fillStyle = "#000000";
+            ctx.font = "32px Arial";
+            ctx.fillText("Không thể tải hình ảnh hợp đồng.", 10, 50);
+            setActionButtonsEnabled(false);
+            showFormMessage(message);
+          };
+
+          primaryImage.onload = () => {
+            drawContract(primaryImage);
+            showFormMessage("");
+          };
+
+          primaryImage.onerror = () => {
+            showFormMessage(
+              "Không thể tải hình ảnh hợp đồng từ nguồn chính. Đang thử nguồn dự phòng..."
+            );
+
+            const fallbackImage = new Image();
+            fallbackImage.crossOrigin = "Anonymous";
+
+            fallbackImage.onload = () => {
+              drawContract(fallbackImage);
+              showFormMessage(
+                "Đã sử dụng hình ảnh mặc định do lỗi tải nguồn chính."
+              );
+            };
+
+            fallbackImage.onerror = () => {
+              handleImageFailure(
+                "Lỗi: Không thể tải hình ảnh từ cả nguồn chính và dự phòng. Vui lòng thử lại sau."
+              );
+            };
+
+            fallbackImage.src = fallbackUrl;
+          };
+
+          canvas.classList.add("loading");
+          showFormMessage("");
+          primaryImage.src = imageUrl;
+        }
+
+        let canvasFields = [];
+        let tickFields = [];
+
+        function downloadAsPDF(canvas, filename) {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: "p",
+            unit: "px",
+            format: [canvas.width, canvas.height],
+          });
+          pdf.addImage(
+            canvas.toDataURL("image/png", 1.0),
+            "PNG",
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          pdf.save(filename);
+        }
+
+        $(function () {
+          const $downloadBtn = $("#downloadContractBtn");
+          const $proceedBtn = $("#proceedToStep7Btn");
+
+          setActionButtonsEnabled(false);
+
+          $downloadBtn.on("click", function () {
+            if ($downloadBtn.prop("disabled")) {
+              return;
+            }
+
+            const canvas = document.getElementById("contractCanvas");
+            if (!canvas || !canvas.width || !canvas.height) {
+              showFormMessage("Hợp đồng chưa sẵn sàng để tải xuống. Vui lòng thử lại.");
+              return;
+            }
+
+            try {
+              if (!window.jspdf || typeof window.jspdf.jsPDF !== "function") {
+                throw new Error("jsPDF library is unavailable");
+              }
+              const sanitizedLoanCode = (userData.loanCode || "khach-hang").replace(
+                /[^a-zA-Z0-9_-]/g,
+                ""
+              );
+              const fileName = `HopDongVay_${sanitizedLoanCode || "khach-hang"}.pdf`;
+              downloadAsPDF(canvas, fileName);
+              userData.contractDownloadedAt = new Date().toISOString();
+              saveToLocalStorage();
+              showFormMessage("Hợp đồng đã được tải xuống thành công.");
+            } catch (error) {
+              console.error("Không thể xuất hợp đồng:", error);
+              showFormMessage("Không thể tải hợp đồng. Vui lòng thử lại.");
+            }
+          });
+
+          $proceedBtn.on("click", function () {
+            if ($proceedBtn.prop("disabled")) {
+              return;
+            }
+
+            if (!canProceedToStep7) {
+              showFormMessage("Hồ sơ của bạn chưa sẵn sàng. Vui lòng kiểm tra lại.");
+              return;
+            }
+
+            if (!userData.contractDownloadedAt) {
+              showFormMessage("Vui lòng tải hợp đồng vay trước khi tiếp tục.");
+              return;
+            }
+
+            showFormMessage("");
+            userData.currentStep = 7;
+            userData.lastStep6CompletedAt = new Date().toISOString();
+            saveToLocalStorage();
+
+            const nextUrl =
+              $proceedBtn.data("next-url") ||
+              "step7.html";
+            window.location.href = nextUrl;
+          });
+        });
+
+      window.onload = function () {
+        loadUserData();
+
+        const disbursementDateParts = splitDate(userData.disbursementDate);
+        const dueDate = calculateDueDate(
+          userData.disbursementDate,
+          userData.loanTerm
+        );
+        const dueDateParts = splitDate(dueDate);
+
+        canvasFields = [
+          {
+            value: disbursementDateParts.day,
+            x: 539,
+            y: 443,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: disbursementDateParts.month,
+            x: 710,
+            y: 443,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: disbursementDateParts.year,
+            x: 902,
+            y: 443,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.fullName || "",
+            x: 685,
+            y: 517,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.cccd || "",
+            x: 683,
+            y: 585,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.phone || "",
+            x: 683,
+            y: 725,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.email || "",
+            x: 683,
+            y: 795,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.loanAmount
+              ? `${formatNumber(userData.loanAmount)} VND`
+              : "",
+            x: 683,
+            y: 961,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.loanPurpose || "",
+            x: 683,
+            y: 1233,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.accountNumber || "",
+            x: 591,
+            y: 2063,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.interestRate ? `${userData.interestRate}%/năm` : "",
+            x: 801,
+            y: 1555,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: dueDate
+              ? `Ngày ${dueDateParts.day} tháng ${dueDateParts.month} năm ${dueDateParts.year}`
+              : "",
+            x: 681,
+            y: 1381,
+            font: "32px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.loanCode || generateRandomCode("SHBVN"),
+            x: 1629,
+            y: 573,
+            font: "36px Arial bold",
+            color: "#FF0000",
+          },
+          {
+            value: userData.disbursementDate || "",
+            x: 2005,
+            y: 571,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: "NGUYỄN THỊ MỸ DUYÊN",
+            x: 1325,
+            y: 2204,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: "CHI NHÁNH HỒ CHÍ MINH",
+            x: 1326,
+            y: 2277,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: "Đã xét duyệt",
+            x: 1697,
+            y: 2789,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: userData.loanAmount
+              ? `${formatNumber(userData.loanAmount)} VND`
+              : "",
+            x: 1699,
+            y: 2903,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: disbursementDateParts.day,
+            x: 1645,
+            y: 2977,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: disbursementDateParts.month,
+            x: 1825,
+            y: 2977,
+            font: "36px Arial",
+            color: "#000000",
+          },
+          {
+            value: disbursementDateParts.year,
+            x: 2031,
+            y: 2973,
+            font: "36px Arial",
+            color: "#000000",
+          },
+        ];
+
+        tickFields = [
+          {
+            condition: userData.loanPurpose === "Mua nhà",
+            x: 183,
+            y: 1123,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Mua xe",
+            x: 511,
+            y: 1161,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Kinh doanh",
+            x: 767,
+            y: 1159,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Học tập",
+            x: 183,
+            y: 1157,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Du lịch",
+            x: 511,
+            y: 1123,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Tiêu dùng",
+            x: 767,
+            y: 1123,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanPurpose === "Khác",
+            x: 183,
+            y: 1180,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "6",
+            x: 431,
+            y: 1479,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "12",
+            x: 575,
+            y: 1479,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "18",
+            x: 647,
+            y: 1479,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "24",
+            x: 719,
+            y: 1483,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "36",
+            x: 865,
+            y: 1483,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "48",
+            x: 937,
+            y: 1483,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+          {
+            condition: userData.loanTerm === "60",
+            x: 1009,
+            y: 1483,
+            symbol: "✓",
+            font: "36px Arial",
+            color: "#FF0000",
+          },
+        ];
+
+        renderCanvas(
+          "contractCanvas",
+          "../../assets/img/anhhopdongvay.png",
+          "../../assets/img/anhhopdongvay.png"
+        );
+
+        userData.currentStep = 6;
+        saveToLocalStorage();
+      };
+
+    </script>
+
+    <script>
+      // Menu toggle function
+      function toggleMenu() {
+        const menu = document.getElementById('nav-menu');
+        const hamburger = document.querySelector('.hamburger');
+        if (menu && hamburger) {
+          menu.classList.toggle('show');
+          hamburger.setAttribute('aria-expanded', menu.classList.contains('show'));
+        }
+      }
+    </script>
+
+    <div
+      class="zalo-chat-widget"
+      data-oaid="3932037504673339016"
+      data-welcome-message="Chào anh chị ạ , mình cần hỗ trợ thẩm định và xét duyệt điều kiện giải ngân đúng không ạ !"
+      data-autopopup="5"
+      data-width=""
+      data-height=""
+    ></div>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+  </body>
+</html>
