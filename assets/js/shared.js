@@ -4,11 +4,50 @@
 emailjs.init("Cc-147hLWigAZAdeZ");
 window.Laravel = {"csrfToken":"flBZzgVCzEBmPwoEyekJgpET4VkG6FCAU6WnPQta"};
 
+// Optimized backend with cached applications to avoid repeated decryption
 const backend = {
-    applications: JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem('loanApplications') || CryptoJS.AES.encrypt('[]', 'shinhan_key').toString(), 'shinhan_key').toString(CryptoJS.enc.Utf8)) || [],
+    _cachedApplications: null,
+    _cacheInvalidated: false,
+    
+    get applications() {
+        // Return cached applications if available and not invalidated
+        if (this._cachedApplications && !this._cacheInvalidated) {
+            return this._cachedApplications;
+        }
+        
+        try {
+            const encrypted = localStorage.getItem('loanApplications');
+            if (!encrypted) {
+                this._cachedApplications = [];
+                return this._cachedApplications;
+            }
+            
+            const decrypted = CryptoJS.AES.decrypt(encrypted, 'shinhan_key').toString(CryptoJS.enc.Utf8);
+            this._cachedApplications = JSON.parse(decrypted || '[]');
+            this._cacheInvalidated = false;
+            return this._cachedApplications;
+        } catch (e) {
+            // Decryption failed, return empty array
+            this._cachedApplications = [];
+            return this._cachedApplications;
+        }
+    },
+    
     saveApplication(data) {
-        this.applications.push(data);
-        localStorage.setItem('loanApplications', CryptoJS.AES.encrypt(JSON.stringify(this.applications), 'shinhan_key').toString());
+        // Add to cached applications
+        if (!this._cachedApplications) {
+            this._cachedApplications = this.applications;
+        }
+        this._cachedApplications.push(data);
+        
+        // Encrypt and save
+        const encrypted = CryptoJS.AES.encrypt(JSON.stringify(this._cachedApplications), 'shinhan_key').toString();
+        localStorage.setItem('loanApplications', encrypted);
+        this._cacheInvalidated = false;
+    },
+    
+    invalidateCache() {
+        this._cacheInvalidated = true;
     }
 };
 

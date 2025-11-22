@@ -51,13 +51,16 @@ function checkImageInput(frontInputId, backInputId) {
     return frontFile || backFile;
 }
 
-// Render canvas for contract and disbursement
+// Render canvas for contract and disbursement (Optimized)
 function renderCanvas(canvasId, imageUrl, userData) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
 
     // Clean up previous canvas state to prevent memory leaks
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { 
+        willReadFrequently: false,  // Optimize for infrequent reads
+        alpha: false                 // Disable alpha for performance
+    });
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     canvas.classList.add('loading');
@@ -87,6 +90,7 @@ function renderCanvas(canvasId, imageUrl, userData) {
             ctx.imageSmoothingEnabled = false;
             ctx.drawImage(img, 0, 0, 2480, 3508);
 
+            // Batch all text rendering operations
             ctx.font = 'bold 18px Arial';
             ctx.fillStyle = '#000000';
             ctx.textAlign = 'left';
@@ -97,14 +101,23 @@ function renderCanvas(canvasId, imageUrl, userData) {
 
             if (canvasId === 'contractCanvas') {
                 const { day, month, year } = getDateComponents(userData.registrationDate);
-                ctx.fillText(day, 413, 313);
-                ctx.fillText(month, 541, 311);
-                ctx.fillText(year, 681, 311);
-                ctx.fillText(qrFrontData.fullName || userData.fullName || '', 401, 359);
-                ctx.fillText(qrFrontData.idNumber || userData.idNumber || '', 393, 415);
-                ctx.fillText(userData.phoneNumber || '', 403, 513);
-                ctx.fillText(userData.email || '', 405, 567);
-                ctx.fillText(userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : '', 409, 689);
+                
+                // Use a single batch for text rendering
+                const textOperations = [
+                    { text: day, x: 413, y: 313 },
+                    { text: month, x: 541, y: 311 },
+                    { text: year, x: 681, y: 311 },
+                    { text: qrFrontData.fullName || userData.fullName || '', x: 401, y: 359 },
+                    { text: qrFrontData.idNumber || userData.idNumber || '', x: 393, y: 415 },
+                    { text: userData.phoneNumber || '', x: 403, y: 513 },
+                    { text: userData.email || '', x: 405, y: 567 },
+                    { text: userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : '', x: 409, y: 689 }
+                ];
+                
+                // Render all text in one batch
+                textOperations.forEach(({ text, x, y }) => {
+                    if (text) ctx.fillText(text, x, y);
+                });
 
                 const purpose = userData.loanPurpose || '';
                 if (purpose === 'Sửa chữa nhà') {
@@ -126,40 +139,50 @@ function renderCanvas(canvasId, imageUrl, userData) {
                     ctx.fillText(checkmark, 645, 1069);
                 }
 
-                ctx.fillText(userData.interestRate ? `${userData.interestRate}%` : '', 453, 1125);
-                ctx.fillText(userData.accountNumber || '', 273, 1493);
-                ctx.fillText(userData.loanCode || '', 1207, 413);
-                ctx.fillText(userData.registrationDate || '', 1467, 411);
-                ctx.fillText(userData.sellerCode || '', 1271, 451);
-                ctx.fillText(userData.storeCode || '', 1517, 445);
-                ctx.fillText(userData.staffName || '', 961, 1599);
-                ctx.fillText(userData.branchName || '', 967, 1655);
-                ctx.fillText(userData.staffCode || '', 1127, 1719);
-
-                ctx.fillText(checkmark, 1569, 1807);
-                ctx.fillText(checkmark, 1571, 1877);
-                ctx.fillText(checkmark, 1569, 1917);
-                ctx.fillText(checkmark, 1569, 1953);
-
-                ctx.fillText(userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : '', 1217, 2109);
-                ctx.fillText(day, 1231, 2161);
-                ctx.fillText(month, 1349, 2161);
-                ctx.fillText(year, 1477, 2163);
+                const moreTextOperations = [
+                    { text: userData.interestRate ? `${userData.interestRate}%` : '', x: 453, y: 1125 },
+                    { text: userData.accountNumber || '', x: 273, y: 1493 },
+                    { text: userData.loanCode || '', x: 1207, y: 413 },
+                    { text: userData.registrationDate || '', x: 1467, y: 411 },
+                    { text: userData.sellerCode || '', x: 1271, y: 451 },
+                    { text: userData.storeCode || '', x: 1517, y: 445 },
+                    { text: userData.staffName || '', x: 961, y: 1599 },
+                    { text: userData.branchName || '', x: 967, y: 1655 },
+                    { text: userData.staffCode || '', x: 1127, y: 1719 },
+                    { text: checkmark, x: 1569, y: 1807 },
+                    { text: checkmark, x: 1571, y: 1877 },
+                    { text: checkmark, x: 1569, y: 1917 },
+                    { text: checkmark, x: 1569, y: 1953 },
+                    { text: userData.loanAmount ? `${formatNumber(userData.loanAmount)} VND` : '', x: 1217, y: 2109 },
+                    { text: day, x: 1231, y: 2161 },
+                    { text: month, x: 1349, y: 2161 },
+                    { text: year, x: 1477, y: 2163 }
+                ];
+                
+                moreTextOperations.forEach(({ text, x, y }) => {
+                    if (text) ctx.fillText(text, x, y);
+                });
 
                 // Generate data URL and clean up immediately
-                const dataUrl = canvas.toDataURL('image/png');
+                const dataUrl = canvas.toDataURL('image/png', 0.9);  // Added quality parameter
                 userData.contractImageUrl = dataUrl;
                 saveToLocalStorage();
             } else if (canvasId === 'disbursementCanvas') {
-                ctx.fillText(userData.accountNumber || '', 931, 725);
-                ctx.fillText(qrFrontData.fullName || userData.fullName || '', 953, 821);
-                ctx.fillText(userData.bankName || '', 961, 889);
-                ctx.fillText(qrFrontData.idNumber || userData.idNumber || '', 993, 1121);
-                ctx.fillText(qrBackData.idIssueDate || userData.idIssueDate || '', 1661, 1121);
-                ctx.fillText(qrBackData.idIssuePlace || userData.idIssuePlace || '', 2233, 1121);
+                const textOperations = [
+                    { text: userData.accountNumber || '', x: 931, y: 725 },
+                    { text: qrFrontData.fullName || userData.fullName || '', x: 953, y: 821 },
+                    { text: userData.bankName || '', x: 961, y: 889 },
+                    { text: qrFrontData.idNumber || userData.idNumber || '', x: 993, y: 1121 },
+                    { text: qrBackData.idIssueDate || userData.idIssueDate || '', x: 1661, y: 1121 },
+                    { text: qrBackData.idIssuePlace || userData.idIssuePlace || '', x: 2233, y: 1121 }
+                ];
+                
+                textOperations.forEach(({ text, x, y }) => {
+                    if (text) ctx.fillText(text, x, y);
+                });
 
                 // Generate data URL and clean up immediately
-                const dataUrl = canvas.toDataURL('image/png');
+                const dataUrl = canvas.toDataURL('image/png', 0.9);  // Added quality parameter
                 userData.disbursementImageUrl = dataUrl;
                 saveToLocalStorage();
             }

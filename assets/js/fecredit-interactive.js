@@ -18,16 +18,35 @@
     const partnersSlider = document.getElementById('partnersSlider');
 
     // ===================================
-    // Sticky Header on Scroll
+    // Utility: Throttle function
+    // ===================================
+    function throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    // ===================================
+    // Sticky Header on Scroll (Optimized)
     // ===================================
     function initStickyHeader() {
-        window.addEventListener('scroll', function() {
+        if (!header) return;
+        
+        // Use throttled scroll handler for better performance
+        const handleScroll = throttle(function() {
             if (window.scrollY > 100) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
-        });
+        }, 100);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     // ===================================
@@ -78,25 +97,28 @@
     }
 
     // ===================================
-    // Back to Top Button
+    // Back to Top Button (Optimized)
     // ===================================
     function initBackToTop() {
-        if (backToTopBtn) {
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) {
-                    backToTopBtn.classList.add('show');
-                } else {
-                    backToTopBtn.classList.remove('show');
-                }
-            });
+        if (!backToTopBtn) return;
+        
+        // Use throttled scroll handler for better performance
+        const handleScroll = throttle(function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        }, 200);
 
-            backToTopBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-        }
+        });
     }
 
     // ===================================
