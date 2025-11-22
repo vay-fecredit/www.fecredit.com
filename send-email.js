@@ -5,7 +5,7 @@ const emailUser = process.env.EMAIL_USER || 'your-email@gmail.com';
 const emailPass = process.env.EMAIL_PASS || 'your-app-password';
 const recipientEmail = process.env.RECIPIENT_EMAIL || 'recipient@gmail.com';
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: emailUser,
@@ -13,7 +13,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-let mailOptions = {
+const mailOptions = {
   from: emailUser,
   to: recipientEmail,
   subject: 'Test Email',

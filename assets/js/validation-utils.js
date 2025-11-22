@@ -9,9 +9,9 @@
  * @returns {boolean} - True if valid, false otherwise
  */
 function validateEmail(email) {
-    // Simplified email regex - more maintainable
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  // Simplified email regex - more maintainable
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 /**
@@ -21,16 +21,16 @@ function validateEmail(email) {
  * @returns {boolean} - True if valid, false otherwise
  */
 function validateVietnamesePhone(phone) {
-    // Remove spaces and special characters for validation
-    const cleanPhone = phone.replace(/[\s\-()]/g, '');
+  // Remove spaces and special characters for validation
+  const cleanPhone = phone.replace(/[\s\-()]/g, '');
     
-    // Vietnamese phone patterns:
-    // - Mobile: starts with 03, 05, 07, 08, 09 (10 digits total)
-    // - Landline: starts with 02 (10 digits total)
-    // - International: +84 followed by 9 digits
-    const phoneRegex = /^(?:\+84|0)(?:3|5|7|8|9|2)\d{8}$/;
+  // Vietnamese phone patterns:
+  // - Mobile: starts with 03, 05, 07, 08, 09 (10 digits total)
+  // - Landline: starts with 02 (10 digits total)
+  // - International: +84 followed by 9 digits
+  const phoneRegex = /^(?:\+84|0)(?:3|5|7|8|9|2)\d{8}$/;
     
-    return phoneRegex.test(cleanPhone);
+  return phoneRegex.test(cleanPhone);
 }
 
 /**
@@ -39,12 +39,12 @@ function validateVietnamesePhone(phone) {
  * @returns {boolean} - True if valid, false otherwise
  */
 function validateVietnameseID(idNumber) {
-    // CMND: 9 or 12 digits
-    // CCCD: 12 digits
-    const cleanId = idNumber.replace(/\s/g, '');
-    const idRegex = /^\d{9}$|^\d{12}$/;
+  // CMND: 9 or 12 digits
+  // CCCD: 12 digits
+  const cleanId = idNumber.replace(/\s/g, '');
+  const idRegex = /^\d{9}$|^\d{12}$/;
     
-    return idRegex.test(cleanId);
+  return idRegex.test(cleanId);
 }
 
 /**
@@ -55,27 +55,27 @@ function validateVietnameseID(idNumber) {
  * @returns {object} - {valid: boolean, message: string}
  */
 function validateLoanAmount(amount, min = 5000000, max = 900000000) {
-    const numAmount = parseFloat(amount);
+  const numAmount = parseFloat(amount);
     
-    if (isNaN(numAmount)) {
-        return { valid: false, message: 'Vui lòng nhập số tiền hợp lệ' };
-    }
+  if (isNaN(numAmount)) {
+    return { valid: false, message: 'Vui lòng nhập số tiền hợp lệ' };
+  }
     
-    if (numAmount < min) {
-        return { 
-            valid: false, 
-            message: `Số tiền vay tối thiểu là ${formatCurrency(min)}` 
-        };
-    }
+  if (numAmount < min) {
+    return { 
+      valid: false, 
+      message: `Số tiền vay tối thiểu là ${formatCurrency(min)}` 
+    };
+  }
     
-    if (numAmount > max) {
-        return { 
-            valid: false, 
-            message: `Số tiền vay tối đa là ${formatCurrency(max)}` 
-        };
-    }
+  if (numAmount > max) {
+    return { 
+      valid: false, 
+      message: `Số tiền vay tối đa là ${formatCurrency(max)}` 
+    };
+  }
     
-    return { valid: true, message: '' };
+  return { valid: true, message: '' };
 }
 
 /**
@@ -86,20 +86,20 @@ function validateLoanAmount(amount, min = 5000000, max = 900000000) {
  * @returns {object} - {valid: boolean, message: string}
  */
 function validateLoanTerm(months, min = 6, max = 60) {
-    const numMonths = parseInt(months);
+  const numMonths = parseInt(months);
     
-    if (isNaN(numMonths)) {
-        return { valid: false, message: 'Vui lòng nhập số tháng hợp lệ' };
-    }
+  if (isNaN(numMonths)) {
+    return { valid: false, message: 'Vui lòng nhập số tháng hợp lệ' };
+  }
     
-    if (numMonths < min || numMonths > max) {
-        return { 
-            valid: false, 
-            message: `Thời hạn vay từ ${min} đến ${max} tháng` 
-        };
-    }
+  if (numMonths < min || numMonths > max) {
+    return { 
+      valid: false, 
+      message: `Thời hạn vay từ ${min} đến ${max} tháng` 
+    };
+  }
     
-    return { valid: true, message: '' };
+  return { valid: true, message: '' };
 }
 
 /**
@@ -108,14 +108,14 @@ function validateLoanTerm(months, min = 6, max = 60) {
  * @returns {string} - Sanitized input
  */
 function sanitizeInput(input) {
-    if (typeof input !== 'string') {
-        return input;
-    }
+  if (typeof input !== 'string') {
+    return input;
+  }
     
-    // Create a temporary div to use browser's built-in HTML encoding
-    const div = document.createElement('div');
-    div.textContent = input;
-    return div.innerHTML;
+  // Create a temporary div to use browser's built-in HTML encoding
+  const div = document.createElement('div');
+  div.textContent = input;
+  return div.innerHTML;
 }
 
 /**
@@ -124,12 +124,12 @@ function sanitizeInput(input) {
  * @returns {string} - Formatted currency string
  */
 function formatCurrency(amount) {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(amount);
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount);
 }
 
 /**
@@ -138,30 +138,30 @@ function formatCurrency(amount) {
  * @returns {object} - {valid: boolean, message: string}
  */
 function validateDateOfBirth(dateString) {
-    const birthDate = new Date(dateString);
-    const today = new Date();
+  const birthDate = new Date(dateString);
+  const today = new Date();
     
-    if (isNaN(birthDate.getTime())) {
-        return { valid: false, message: 'Ngày sinh không hợp lệ' };
-    }
+  if (isNaN(birthDate.getTime())) {
+    return { valid: false, message: 'Ngày sinh không hợp lệ' };
+  }
     
-    // Calculate age
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
+  // Calculate age
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
     
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
     
-    if (age < 18) {
-        return { valid: false, message: 'Bạn phải từ 18 tuổi trở lên' };
-    }
+  if (age < 18) {
+    return { valid: false, message: 'Bạn phải từ 18 tuổi trở lên' };
+  }
     
-    if (age > 100) {
-        return { valid: false, message: 'Ngày sinh không hợp lệ' };
-    }
+  if (age > 100) {
+    return { valid: false, message: 'Ngày sinh không hợp lệ' };
+  }
     
-    return { valid: true, message: '' };
+  return { valid: true, message: '' };
 }
 
 /**
@@ -170,28 +170,28 @@ function validateDateOfBirth(dateString) {
  * @param {string} message - Error message to display
  */
 function showFieldError(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    if (!field) return;
+  const field = document.getElementById(fieldId);
+  if (!field) return;
     
-    // Remove existing error
-    removeFieldError(fieldId);
+  // Remove existing error
+  removeFieldError(fieldId);
     
-    // Add error class
-    field.classList.add('is-invalid');
-    field.setAttribute('aria-invalid', 'true');
+  // Add error class
+  field.classList.add('is-invalid');
+  field.setAttribute('aria-invalid', 'true');
     
-    // Create error message element
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error field-error';
-    errorDiv.id = `${fieldId}-error`;
-    errorDiv.setAttribute('role', 'alert');
-    errorDiv.textContent = message;
+  // Create error message element
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error field-error';
+  errorDiv.id = `${fieldId}-error`;
+  errorDiv.setAttribute('role', 'alert');
+  errorDiv.textContent = message;
     
-    // Insert error after field
-    field.parentNode.insertBefore(errorDiv, field.nextSibling);
+  // Insert error after field
+  field.parentNode.insertBefore(errorDiv, field.nextSibling);
     
-    // Associate error with field for screen readers
-    field.setAttribute('aria-describedby', `${fieldId}-error`);
+  // Associate error with field for screen readers
+  field.setAttribute('aria-describedby', `${fieldId}-error`);
 }
 
 /**
@@ -199,19 +199,19 @@ function showFieldError(fieldId, message) {
  * @param {string} fieldId - ID of the input field
  */
 function removeFieldError(fieldId) {
-    const field = document.getElementById(fieldId);
-    if (!field) return;
+  const field = document.getElementById(fieldId);
+  if (!field) return;
     
-    // Remove error class
-    field.classList.remove('is-invalid');
-    field.removeAttribute('aria-invalid');
-    field.removeAttribute('aria-describedby');
+  // Remove error class
+  field.classList.remove('is-invalid');
+  field.removeAttribute('aria-invalid');
+  field.removeAttribute('aria-describedby');
     
-    // Remove error message
-    const errorDiv = document.getElementById(`${fieldId}-error`);
-    if (errorDiv) {
-        errorDiv.remove();
-    }
+  // Remove error message
+  const errorDiv = document.getElementById(`${fieldId}-error`);
+  if (errorDiv) {
+    errorDiv.remove();
+  }
 }
 
 /**
@@ -220,58 +220,58 @@ function removeFieldError(fieldId) {
  * @param {string} validationType - Type of validation (email, phone, idNumber, etc.)
  */
 function validateFieldRealtime(fieldId, validationType) {
-    const field = document.getElementById(fieldId);
-    if (!field) return;
+  const field = document.getElementById(fieldId);
+  if (!field) return;
     
-    field.addEventListener('blur', function() {
-        const value = this.value.trim();
+  field.addEventListener('blur', function() {
+    const value = this.value.trim();
         
-        if (!value) {
-            removeFieldError(fieldId);
-            return;
-        }
+    if (!value) {
+      removeFieldError(fieldId);
+      return;
+    }
         
-        let isValid = false;
-        let message = '';
+    let isValid = false;
+    let message = '';
         
-        switch(validationType) {
-            case 'email':
-                isValid = validateEmail(value);
-                message = 'Địa chỉ email không hợp lệ';
-                break;
-            case 'phone':
-                isValid = validateVietnamesePhone(value);
-                message = 'Số điện thoại không hợp lệ';
-                break;
-            case 'idNumber':
-                isValid = validateVietnameseID(value);
-                message = 'Số CMND/CCCD không hợp lệ';
-                break;
-            default:
-                isValid = true;
-        }
+    switch(validationType) {
+    case 'email':
+      isValid = validateEmail(value);
+      message = 'Địa chỉ email không hợp lệ';
+      break;
+    case 'phone':
+      isValid = validateVietnamesePhone(value);
+      message = 'Số điện thoại không hợp lệ';
+      break;
+    case 'idNumber':
+      isValid = validateVietnameseID(value);
+      message = 'Số CMND/CCCD không hợp lệ';
+      break;
+    default:
+      isValid = true;
+    }
         
-        if (!isValid) {
-            showFieldError(fieldId, message);
-        } else {
-            removeFieldError(fieldId);
-        }
-    });
+    if (!isValid) {
+      showFieldError(fieldId, message);
+    } else {
+      removeFieldError(fieldId);
+    }
+  });
 }
 
 // Export functions if using modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        validateEmail,
-        validateVietnamesePhone,
-        validateVietnameseID,
-        validateLoanAmount,
-        validateLoanTerm,
-        sanitizeInput,
-        formatCurrency,
-        validateDateOfBirth,
-        showFieldError,
-        removeFieldError,
-        validateFieldRealtime
-    };
+  module.exports = {
+    validateEmail,
+    validateVietnamesePhone,
+    validateVietnameseID,
+    validateLoanAmount,
+    validateLoanTerm,
+    sanitizeInput,
+    formatCurrency,
+    validateDateOfBirth,
+    showFieldError,
+    removeFieldError,
+    validateFieldRealtime
+  };
 }

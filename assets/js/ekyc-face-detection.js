@@ -7,43 +7,69 @@
  * File này cần được include vào ekyc-app.js hoặc sử dụng như extension
  */
 
-// Load config
+// Load config with caching and promise memoization
 let ekycConfig = null;
-fetch('/lib/ekyc-config.json')
-  .then(res => res.json())
-  .then(config => {
-    ekycConfig = config.ekyc;
-    // eKYC config loaded successfully
-  })
-  .catch(err => {
-    // Failed to load eKYC config, using fallback
-    // Fallback config
-    ekycConfig = {
-      face_detection: {
-        roll_soft_threshold: 10,
-        roll_hard_threshold: 15,
-        pitch_threshold: 20,
-        yaw_threshold: 20,
-        confidence_threshold: 0.7,
-        smoothing_frames: 5,
-        detection_interval_ms: 300,
-        auto_capture_delay_ms: 1500
-      },
-      retry_behavior: {
-        max_attempts_before_report: 3,
-        show_help_after_attempts: 2,
-        retry_button_always_visible: true
-      },
-      ui_features: {
-        show_angle_overlay: true,
-        show_tilt_meter: true,
-        show_angle_value: false,
-        show_face_guide_box: true,
-        enable_realtime_hints: true,
-        enable_error_reporting: true
-      }
-    };
-  });
+let ekycConfigPromise = null;
+
+function loadEkycConfig() {
+  // Return cached promise if already loading
+  if (ekycConfigPromise) {
+    return ekycConfigPromise;
+  }
+  
+  // Return resolved promise if already loaded
+  if (ekycConfig) {
+    return Promise.resolve(ekycConfig);
+  }
+  
+  // Load config with caching
+  ekycConfigPromise = fetch('/lib/ekyc-config.json')
+    .then(res => res.json())
+    .then(config => {
+      ekycConfig = config.ekyc;
+      ekycConfigPromise = null; // Clear loading promise
+      return ekycConfig;
+    })
+    .catch(err => {
+      // Failed to load eKYC config, using fallback
+      ekycConfig = {
+        face_detection: {
+          roll_soft_threshold: 10,
+          roll_hard_threshold: 15,
+          pitch_threshold: 20,
+          yaw_threshold: 20,
+          confidence_threshold: 0.7,
+          smoothing_frames: 5,
+          detection_interval_ms: 300,
+          auto_capture_delay_ms: 1500
+        },
+        retry_behavior: {
+          max_attempts_before_report: 3,
+          show_help_after_attempts: 2,
+          retry_button_always_visible: true
+        },
+        ui_features: {
+          show_angle_overlay: true,
+          show_tilt_meter: true,
+          show_angle_value: false,
+          show_face_guide_box: true,
+          enable_realtime_hints: true,
+          enable_error_reporting: true
+        }
+      };
+      ekycConfigPromise = null; // Clear loading promise
+      return ekycConfig;
+    });
+  
+  return ekycConfigPromise;
+}
+
+// Pre-load config on page load for better UX
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => loadEkycConfig());
+} else {
+  loadEkycConfig();
+}
 
 /**
  * Advanced Face Detection Implementation

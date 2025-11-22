@@ -5,12 +5,12 @@
 // (ví dụ qua `lib/env.js` hoặc được backend proxy hóa). Nếu không có, để trống.
 // Hãy cấu hình một API proxy phía server để giữ bí mật token.
 export const apiConfig = {
-    // Đọc domain từ window.env nếu có, fallback an toàn
-    VNPT_DOMAIN: (typeof window !== 'undefined' && window.env && window.env.apiUrl) || 'https://api.idg.vnpt.vn',
+  // Đọc domain từ window.env nếu có, fallback an toàn
+  VNPT_DOMAIN: (typeof window !== 'undefined' && window.env && window.env.apiUrl) || 'https://api.idg.vnpt.vn',
 
-    // Các thông tin nhạy cảm phải được cung cấp an toàn tại runtime (không commit)
-    ACCESS_TOKEN: (typeof window !== 'undefined' && window.env && window.env.accessToken) || '',
-    TOKEN_ID: (typeof window !== 'undefined' && window.env && window.env.tokenId) || '',
-    TOKEN_KEY: (typeof window !== 'undefined' && window.env && window.env.tokenKey) || ''
+  // Các thông tin nhạy cảm phải được cung cấp an toàn tại runtime (không commit)
+  ACCESS_TOKEN: (typeof window !== 'undefined' && window.env && window.env.accessToken) || '',
+  TOKEN_ID: (typeof window !== 'undefined' && window.env && window.env.tokenId) || '',
+  TOKEN_KEY: (typeof window !== 'undefined' && window.env && window.env.tokenKey) || ''
 };
 

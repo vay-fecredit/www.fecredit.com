@@ -6,8 +6,8 @@
  * @returns {string} Formatted number string or empty string if invalid
  */
 function formatNumber(number) {
-    if (!number || isNaN(number)) return "";
-    return parseInt(number).toLocaleString('vi-VN');
+  if (!number || isNaN(number)) return '';
+  return parseInt(number).toLocaleString('vi-VN');
 }
 
 /**
@@ -16,9 +16,9 @@ function formatNumber(number) {
  * @returns {string} Formatted number string
  */
 function formatNumberInput(value) {
-    if (!value) return '';
-    value = value.replace(/[^0-9]/g, '');
-    return parseInt(value).toLocaleString('vi-VN');
+  if (!value) return '';
+  value = value.replace(/[^0-9]/g, '');
+  return parseInt(value).toLocaleString('vi-VN');
 }
 
 /**
@@ -27,8 +27,8 @@ function formatNumberInput(value) {
  * @returns {number} Numeric value
  */
 function unformatNumber(value) {
-    let numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
-    return isNaN(numericValue) ? 0 : numericValue;
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
+  return isNaN(numericValue) ? 0 : numericValue;
 }
 
 /**
@@ -36,9 +36,9 @@ function unformatNumber(value) {
  * @returns {string} Contract ID in format SHB-YYYYMMDD-XXXXXX
  */
 function generateContractId() {
-    const date = new Date();
-    const randomNum = Math.floor(100000 + Math.random() * 900000);
-    return `SHB-${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${randomNum}`;
+  const date = new Date();
+  const randomNum = Math.floor(100000 + Math.random() * 900000);
+  return `SHB-${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${randomNum}`;
 }
 
 /**
@@ -46,7 +46,7 @@ function generateContractId() {
  * @returns {string} Random 6-digit code
  */
 function generateRandomCode() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+  return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 /**
@@ -54,8 +54,8 @@ function generateRandomCode() {
  * @returns {string} Current date formatted as DD/MM/YYYY
  */
 function getCurrentDate() {
-    const date = new Date();
-    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+  const date = new Date();
+  return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
 }
 
 /**
@@ -64,9 +64,9 @@ function getCurrentDate() {
  * @returns {Object} Object with day, month, and year properties
  */
 function getDateComponents(dateStr) {
-    if (!dateStr) return { day: "", month: "", year: "" };
-    const [day, month, year] = dateStr.split('/');
-    return { day: day || "", month: month || "", year: year || "" };
+  if (!dateStr) return { day: '', month: '', year: '' };
+  const [day, month, year] = dateStr.split('/');
+  return { day: day || '', month: month || '', year: year || '' };
 }
 
 /**
@@ -75,12 +75,12 @@ function getDateComponents(dateStr) {
  * @returns {number|string} Interest rate percentage or empty string
  */
 function calculateInterestRate(loanAmount) {
-    if (!loanAmount) return "";
-    loanAmount = parseInt(loanAmount);
-    if (loanAmount >= 300000000) return 10;
-    if (loanAmount >= 100000000) return 11;
-    if (loanAmount >= 50000000) return 11.5;
-    return 12;
+  if (!loanAmount) return '';
+  loanAmount = parseInt(loanAmount);
+  if (loanAmount >= 300000000) return 10;
+  if (loanAmount >= 100000000) return 11;
+  if (loanAmount >= 50000000) return 11.5;
+  return 12;
 }
 
 /**
@@ -91,26 +91,26 @@ function calculateInterestRate(loanAmount) {
  * @returns {string} Formatted monthly payment or empty string
  */
 function calculateMonthlyPayment(loanAmount, loanTerm, annualInterestRate = 11) {
-    if (!loanAmount || !loanTerm) return "";
+  if (!loanAmount || !loanTerm) return '';
 
-    // Convert annual interest rate to monthly rate
-    const monthlyInterestRate = annualInterestRate / 100 / 12;
+  // Convert annual interest rate to monthly rate
+  const monthlyInterestRate = annualInterestRate / 100 / 12;
 
-    // Calculate monthly payment using the standard loan payment formula
-    // PMT = P * [r(1+r)^n] / [(1+r)^n - 1]
-    const principal = parseInt(loanAmount);
-    const numPayments = parseInt(loanTerm);
+  // Calculate monthly payment using the standard loan payment formula
+  // PMT = P * [r(1+r)^n] / [(1+r)^n - 1]
+  const principal = parseInt(loanAmount);
+  const numPayments = parseInt(loanTerm);
 
-    if (monthlyInterestRate === 0) {
-        // Handle case where interest rate is 0
-        return Math.round(principal / numPayments).toLocaleString('vi-VN');
-    }
+  if (monthlyInterestRate === 0) {
+    // Handle case where interest rate is 0
+    return Math.round(principal / numPayments).toLocaleString('vi-VN');
+  }
 
-    const monthlyPayment = principal *
+  const monthlyPayment = principal *
         (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numPayments)) /
         (Math.pow(1 + monthlyInterestRate, numPayments) - 1);
 
-    return Math.round(monthlyPayment).toLocaleString('vi-VN');
+  return Math.round(monthlyPayment).toLocaleString('vi-VN');
 }
 
 /**
@@ -118,26 +118,26 @@ function calculateMonthlyPayment(loanAmount, loanTerm, annualInterestRate = 11) 
  * @returns {string} Loan code in format SHB-YYYYMMDD-XXXXXX
  */
 function generateLoanCode() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const random = Math.floor(100000 + Math.random() * 900000);
-    return `SHB-${year}${month}${day}-${random}`;
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const random = Math.floor(100000 + Math.random() * 900000);
+  return `SHB-${year}${month}${day}-${random}`;
 }
 
 // Export functions if using modules, otherwise they're available globally
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        formatNumber,
-        formatNumberInput,
-        unformatNumber,
-        generateContractId,
-        generateRandomCode,
-        getCurrentDate,
-        getDateComponents,
-        calculateInterestRate,
-        calculateMonthlyPayment,
-        generateLoanCode
-    };
+  module.exports = {
+    formatNumber,
+    formatNumberInput,
+    unformatNumber,
+    generateContractId,
+    generateRandomCode,
+    getCurrentDate,
+    getDateComponents,
+    calculateInterestRate,
+    calculateMonthlyPayment,
+    generateLoanCode
+  };
 }

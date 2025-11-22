@@ -26,20 +26,20 @@ $.fn.validate = function(options = {}) {
     let message = '';
     if (rules.required && (!value || value.toString().trim() === '')) {
       switch (name) {
-        case 'fullName':
-          message = 'Vui lòng nhập họ và tên.';
-          break;
-        case 'phone':
-          message = 'Số điện thoại phải có 10-11 số.'; // default if empty
-          break;
-        case 'email':
-          message = 'Email không hợp lệ.';
-          break;
-        case 'idPhoto':
-          message = 'Vui lòng tải lên ảnh CCCD/CMND.';
-          break;
-        default:
-          message = 'Trường này là bắt buộc.';
+      case 'fullName':
+        message = 'Vui lòng nhập họ và tên.';
+        break;
+      case 'phone':
+        message = 'Số điện thoại phải có 10-11 số.'; // default if empty
+        break;
+      case 'email':
+        message = 'Email không hợp lệ.';
+        break;
+      case 'idPhoto':
+        message = 'Vui lòng tải lên ảnh CCCD/CMND.';
+        break;
+      default:
+        message = 'Trường này là bắt buộc.';
       }
     }
     if (!message && rules.minlength && value && value.toString().length < rules.minlength) {

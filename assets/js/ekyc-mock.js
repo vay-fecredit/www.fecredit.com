@@ -27,13 +27,13 @@ startBtn.onclick = async () => {
     .withFaceDescriptor();
 
   if (!detections) {
-    showError("Không phát hiện khuôn mặt");
+    showError('Không phát hiện khuôn mặt');
     return;
   }
 
   if (!referenceDescriptor) {
     referenceDescriptor = detections.descriptor;
-    alert("📸 Khuôn mặt mẫu đã được lưu. Vui lòng xác thực lại để so khớp.");
+    alert('📸 Khuôn mặt mẫu đã được lưu. Vui lòng xác thực lại để so khớp.');
     return;
   }
 
@@ -42,19 +42,19 @@ startBtn.onclick = async () => {
   if (distance < 0.5) {
     showSuccess();
   } else {
-    showError("Không khớp khuôn mặt");
+    showError('Không khớp khuôn mặt');
   }
 };
 
 function showSuccess() {
   document.getElementById('success-message').style.display = 'block';
   setTimeout(() => {
-    window.location.href = "pages/vi/step4.html";
+    window.location.href = 'pages/vi/step4.html';
   }, 2000);
 }
 
 function showError(msg) {
   const err = document.getElementById('error-message');
-  err.textContent = "❌ " + msg;
+  err.textContent = '❌ ' + msg;
   err.style.display = 'block';
 }
