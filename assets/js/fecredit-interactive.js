@@ -4,250 +4,250 @@
  */
 
 (function() {
-    'use strict';
+  'use strict';
 
-    // ===================================
-    // DOM Elements
-    // ===================================
-    const header = document.getElementById('header');
-    const navbarToggler = document.getElementById('navbarToggler');
-    const navbarMenu = document.getElementById('navbarMenu');
-    const faqItems = document.querySelectorAll('.faq-item');
-    const backToTopBtn = document.getElementById('backToTop');
-    const loanForm = document.getElementById('loanRegistrationForm');
-    const partnersSlider = document.getElementById('partnersSlider');
+  // ===================================
+  // DOM Elements
+  // ===================================
+  const header = document.getElementById('header');
+  const navbarToggler = document.getElementById('navbarToggler');
+  const navbarMenu = document.getElementById('navbarMenu');
+  const faqItems = document.querySelectorAll('.faq-item');
+  const backToTopBtn = document.getElementById('backToTop');
+  const loanForm = document.getElementById('loanRegistrationForm');
+  const partnersSlider = document.getElementById('partnersSlider');
 
-    // ===================================
-    // Utility: Throttle function
-    // ===================================
-    function throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
+  // ===================================
+  // Utility: Throttle function
+  // ===================================
+  function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
 
-    // ===================================
-    // Sticky Header on Scroll (Optimized)
-    // ===================================
-    function initStickyHeader() {
-        if (!header) return;
+  // ===================================
+  // Sticky Header on Scroll (Optimized)
+  // ===================================
+  function initStickyHeader() {
+    if (!header) return;
         
-        // Use throttled scroll handler for better performance
-        const handleScroll = throttle(function() {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        }, 100);
+    // Use throttled scroll handler for better performance
+    const handleScroll = throttle(function() {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }, 100);
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
 
-    // ===================================
-    // Mobile Navigation Toggle
-    // ===================================
-    function initMobileNav() {
-        if (navbarToggler && navbarMenu) {
-            navbarToggler.addEventListener('click', function() {
-                navbarMenu.classList.toggle('active');
-            });
+  // ===================================
+  // Mobile Navigation Toggle
+  // ===================================
+  function initMobileNav() {
+    if (navbarToggler && navbarMenu) {
+      navbarToggler.addEventListener('click', function() {
+        navbarMenu.classList.toggle('active');
+      });
 
-            // Close menu when clicking on a link
-            const navLinks = navbarMenu.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    navbarMenu.classList.remove('active');
-                });
-            });
+      // Close menu when clicking on a link
+      const navLinks = navbarMenu.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          navbarMenu.classList.remove('active');
+        });
+      });
 
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!navbarToggler.contains(e.target) && !navbarMenu.contains(e.target)) {
-                    navbarMenu.classList.remove('active');
-                }
-            });
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!navbarToggler.contains(e.target) && !navbarMenu.contains(e.target)) {
+          navbarMenu.classList.remove('active');
         }
+      });
     }
+  }
 
-    // ===================================
-    // FAQ Accordion
-    // ===================================
-    function initFAQAccordion() {
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
+  // ===================================
+  // FAQ Accordion
+  // ===================================
+  function initFAQAccordion() {
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
             
-            question.addEventListener('click', function() {
-                // Close all other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current item
-                item.classList.toggle('active');
-            });
+      question.addEventListener('click', function() {
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item && otherItem.classList.contains('active')) {
+            otherItem.classList.remove('active');
+          }
         });
-    }
+                
+        // Toggle current item
+        item.classList.toggle('active');
+      });
+    });
+  }
 
-    // ===================================
-    // Back to Top Button (Optimized)
-    // ===================================
-    function initBackToTop() {
-        if (!backToTopBtn) return;
+  // ===================================
+  // Back to Top Button (Optimized)
+  // ===================================
+  function initBackToTop() {
+    if (!backToTopBtn) return;
         
-        // Use throttled scroll handler for better performance
-        const handleScroll = throttle(function() {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        }, 200);
+    // Use throttled scroll handler for better performance
+    const handleScroll = throttle(function() {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, 200);
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
-    // ===================================
-    // Smooth Scroll for Anchor Links
-    // ===================================
-    function initSmoothScroll() {
-        const anchorLinks = document.querySelectorAll('a[href^="#"]');
+  // ===================================
+  // Smooth Scroll for Anchor Links
+  // ===================================
+  function initSmoothScroll() {
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
         
-        anchorLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
                 
-                // Skip if it's just "#"
-                if (href === '#') return;
+        // Skip if it's just "#"
+        if (href === '#') return;
                 
-                const target = document.querySelector(href);
+        const target = document.querySelector(href);
                 
-                if (target) {
-                    e.preventDefault();
-                    const headerHeight = header.offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight - 20;
+        if (target) {
+          e.preventDefault();
+          const headerHeight = header.offsetHeight;
+          const targetPosition = target.offsetTop - headerHeight - 20;
                     
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
-    // ===================================
-    // Form Validation
-    // ===================================
-    function initFormValidation() {
-        if (loanForm) {
-            loanForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const fullName = document.getElementById('fullName').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const loanAmount = document.getElementById('loanAmount').value;
-                const loanTerm = document.getElementById('loanTerm').value;
-                const agree = document.querySelector('input[name="agree"]').checked;
-                
-                // Validation
-                let isValid = true;
-                let errorMessage = '';
-                
-                if (!fullName) {
-                    isValid = false;
-                    errorMessage += 'Vui lòng nhập họ và tên.\n';
-                }
-                
-                if (!phone) {
-                    isValid = false;
-                    errorMessage += 'Vui lòng nhập số điện thoại.\n';
-                } else if (!validatePhone(phone)) {
-                    isValid = false;
-                    errorMessage += 'Số điện thoại không hợp lệ.\n';
-                }
-                
-                if (email && !validateEmail(email)) {
-                    isValid = false;
-                    errorMessage += 'Email không hợp lệ.\n';
-                }
-                
-                if (!loanAmount) {
-                    isValid = false;
-                    errorMessage += 'Vui lòng chọn số tiền vay.\n';
-                }
-                
-                if (!loanTerm) {
-                    isValid = false;
-                    errorMessage += 'Vui lòng chọn thời gian vay.\n';
-                }
-                
-                if (!agree) {
-                    isValid = false;
-                    errorMessage += 'Vui lòng đồng ý với điều khoản sử dụng.\n';
-                }
-                
-                if (isValid) {
-                    // Show success message
-                    showNotification('success', 'Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.');
-                    
-                    // Log form data (in production, send to server)
-                    // TODO: Send form data to server
-                    // Form data: fullName, phone, email, loanAmount, loanTerm, productType, note
-                    
-                    // Reset form
-                    loanForm.reset();
-                } else {
-                    showNotification('error', errorMessage);
-                }
-            });
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
         }
-    }
+      });
+    });
+  }
 
-    // ===================================
-    // Validation Helpers
-    // ===================================
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validatePhone(phone) {
-        // Vietnamese phone number format
-        const re = /^(0|\+84)[0-9]{9,10}$/;
-        return re.test(phone.replace(/\s/g, ''));
-    }
-
-    // ===================================
-    // Notification System
-    // ===================================
-    function showNotification(type, message) {
-        // Remove existing notifications
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-            existingNotification.remove();
+  // ===================================
+  // Form Validation
+  // ===================================
+  function initFormValidation() {
+    if (loanForm) {
+      loanForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+                
+        // Get form values
+        const fullName = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const loanAmount = document.getElementById('loanAmount').value;
+        const loanTerm = document.getElementById('loanTerm').value;
+        const agree = document.querySelector('input[name="agree"]').checked;
+                
+        // Validation
+        let isValid = true;
+        let errorMessage = '';
+                
+        if (!fullName) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập họ và tên.\n';
         }
+                
+        if (!phone) {
+          isValid = false;
+          errorMessage += 'Vui lòng nhập số điện thoại.\n';
+        } else if (!validatePhone(phone)) {
+          isValid = false;
+          errorMessage += 'Số điện thoại không hợp lệ.\n';
+        }
+                
+        if (email && !validateEmail(email)) {
+          isValid = false;
+          errorMessage += 'Email không hợp lệ.\n';
+        }
+                
+        if (!loanAmount) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn số tiền vay.\n';
+        }
+                
+        if (!loanTerm) {
+          isValid = false;
+          errorMessage += 'Vui lòng chọn thời gian vay.\n';
+        }
+                
+        if (!agree) {
+          isValid = false;
+          errorMessage += 'Vui lòng đồng ý với điều khoản sử dụng.\n';
+        }
+                
+        if (isValid) {
+          // Show success message
+          showNotification('success', 'Đăng ký thành công! Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.');
+                    
+          // Log form data (in production, send to server)
+          // TODO: Send form data to server
+          // Form data: fullName, phone, email, loanAmount, loanTerm, productType, note
+                    
+          // Reset form
+          loanForm.reset();
+        } else {
+          showNotification('error', errorMessage);
+        }
+      });
+    }
+  }
+
+  // ===================================
+  // Validation Helpers
+  // ===================================
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  function validatePhone(phone) {
+    // Vietnamese phone number format
+    const re = /^(0|\+84)[0-9]{9,10}$/;
+    return re.test(phone.replace(/\s/g, ''));
+  }
+
+  // ===================================
+  // Notification System
+  // ===================================
+  function showNotification(type, message) {
+    // Remove existing notifications
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+      existingNotification.remove();
+    }
         
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.style.cssText = `
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.style.cssText = `
             position: fixed;
             top: 100px;
             right: 20px;
@@ -261,24 +261,24 @@
             animation: slideIn 0.3s ease-out;
         `;
         
-        notification.innerHTML = `
+    notification.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                 <div style="white-space: pre-line;">${message}</div>
                 <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; margin-left: 10px;">&times;</button>
             </div>
         `;
         
-        document.body.appendChild(notification);
+    document.body.appendChild(notification);
         
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.remove();
-        }, 5000);
-    }
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
+  }
 
-    // Add slide-in animation
-    const style = document.createElement('style');
-    style.textContent = `
+  // Add slide-in animation
+  const style = document.createElement('style');
+  style.textContent = `
         @keyframes slideIn {
             from {
                 transform: translateX(100%);
@@ -290,142 +290,142 @@
             }
         }
     `;
-    document.head.appendChild(style);
+  document.head.appendChild(style);
 
-    // ===================================
-    // Partners Slider Auto-scroll
-    // ===================================
-    function initPartnersSlider() {
-        if (partnersSlider) {
-            let scrollInterval;
-            let isHovering = false;
+  // ===================================
+  // Partners Slider Auto-scroll
+  // ===================================
+  function initPartnersSlider() {
+    if (partnersSlider) {
+      let scrollInterval;
+      let isHovering = false;
             
-            // Auto-scroll functionality
-            function startAutoScroll() {
-                scrollInterval = setInterval(() => {
-                    if (!isHovering) {
-                        partnersSlider.scrollLeft += 2;
+      // Auto-scroll functionality
+      function startAutoScroll() {
+        scrollInterval = setInterval(() => {
+          if (!isHovering) {
+            partnersSlider.scrollLeft += 2;
                         
-                        // Reset to start when reaching end
-                        if (partnersSlider.scrollLeft >= partnersSlider.scrollWidth - partnersSlider.clientWidth) {
-                            partnersSlider.scrollLeft = 0;
-                        }
-                    }
-                }, 30);
+            // Reset to start when reaching end
+            if (partnersSlider.scrollLeft >= partnersSlider.scrollWidth - partnersSlider.clientWidth) {
+              partnersSlider.scrollLeft = 0;
             }
+          }
+        }, 30);
+      }
             
-            // Stop on hover
-            partnersSlider.addEventListener('mouseenter', () => {
-                isHovering = true;
-            });
+      // Stop on hover
+      partnersSlider.addEventListener('mouseenter', () => {
+        isHovering = true;
+      });
             
-            partnersSlider.addEventListener('mouseleave', () => {
-                isHovering = false;
-            });
+      partnersSlider.addEventListener('mouseleave', () => {
+        isHovering = false;
+      });
             
-            // Start auto-scroll
-            startAutoScroll();
+      // Start auto-scroll
+      startAutoScroll();
+    }
+  }
+
+  // ===================================
+  // Animate on Scroll
+  // ===================================
+  function initScrollAnimations() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+        
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+          observer.unobserve(entry.target);
         }
-    }
+      });
+    }, observerOptions);
+        
+    // Observe elements
+    const animateElements = document.querySelectorAll('.benefit-card, .process-step, .faq-item');
+    animateElements.forEach(el => observer.observe(el));
+  }
 
-    // ===================================
-    // Animate on Scroll
-    // ===================================
-    function initScrollAnimations() {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+  // ===================================
+  // Form Input Focus Effects
+  // ===================================
+  function initFormInputEffects() {
+    const formControls = document.querySelectorAll('.form-control');
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements
-        const animateElements = document.querySelectorAll('.benefit-card, .process-step, .faq-item');
-        animateElements.forEach(el => observer.observe(el));
-    }
-
-    // ===================================
-    // Form Input Focus Effects
-    // ===================================
-    function initFormInputEffects() {
-        const formControls = document.querySelectorAll('.form-control');
-        
-        formControls.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
-            });
+    formControls.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
             
-            input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('focused');
-            });
-        });
-    }
+      input.addEventListener('blur', function() {
+        this.parentElement.classList.remove('focused');
+      });
+    });
+  }
 
-    // ===================================
-    // Loan Calculator (Simple)
-    // ===================================
-    function initLoanCalculator() {
-        const loanAmountInput = document.getElementById('loanAmount');
-        const loanTermInput = document.getElementById('loanTerm');
+  // ===================================
+  // Loan Calculator (Simple)
+  // ===================================
+  function initLoanCalculator() {
+    const loanAmountInput = document.getElementById('loanAmount');
+    const loanTermInput = document.getElementById('loanTerm');
         
-        if (loanAmountInput && loanTermInput) {
-            function calculateMonthlyPayment() {
-                const amount = parseFloat(loanAmountInput.value);
-                const term = parseInt(loanTermInput.value);
+    if (loanAmountInput && loanTermInput) {
+      function calculateMonthlyPayment() {
+        const amount = parseFloat(loanAmountInput.value);
+        const term = parseInt(loanTermInput.value);
                 
-                if (amount && term) {
-                    // Simple calculation (11.5% annual interest rate)
-                    const annualRate = 0.115;
-                    const monthlyRate = annualRate / 12;
-                    const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, term)) / 
+        if (amount && term) {
+          // Simple calculation (11.5% annual interest rate)
+          const annualRate = 0.115;
+          const monthlyRate = annualRate / 12;
+          const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, term)) / 
                                           (Math.pow(1 + monthlyRate, term) - 1);
                     
-                    // Monthly payment calculated: monthlyPayment.toFixed(0) VNĐ
-                }
-            }
+          // Monthly payment calculated: monthlyPayment.toFixed(0) VNĐ
+        }
+      }
             
-            loanAmountInput.addEventListener('change', calculateMonthlyPayment);
-            loanTermInput.addEventListener('change', calculateMonthlyPayment);
-        }
+      loanAmountInput.addEventListener('change', calculateMonthlyPayment);
+      loanTermInput.addEventListener('change', calculateMonthlyPayment);
     }
+  }
 
-    // ===================================
-    // Initialize All Features
-    // ===================================
-    function init() {
-        // Wait for DOM to be fully loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() {
-                initializeFeatures();
-            });
-        } else {
-            initializeFeatures();
-        }
+  // ===================================
+  // Initialize All Features
+  // ===================================
+  function init() {
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initializeFeatures();
+      });
+    } else {
+      initializeFeatures();
     }
+  }
 
-    function initializeFeatures() {
-        initStickyHeader();
-        initMobileNav();
-        initFAQAccordion();
-        initBackToTop();
-        initSmoothScroll();
-        initFormValidation();
-        initPartnersSlider();
-        initScrollAnimations();
-        initFormInputEffects();
-        initLoanCalculator();
+  function initializeFeatures() {
+    initStickyHeader();
+    initMobileNav();
+    initFAQAccordion();
+    initBackToTop();
+    initSmoothScroll();
+    initFormValidation();
+    initPartnersSlider();
+    initScrollAnimations();
+    initFormInputEffects();
+    initLoanCalculator();
         
-        // FE Credit Inspired Page - All features initialized successfully!
-    }
+    // FE Credit Inspired Page - All features initialized successfully!
+  }
 
-    // Start initialization
-    init();
+  // Start initialization
+  init();
 
 })();
