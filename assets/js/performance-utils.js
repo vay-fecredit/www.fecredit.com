@@ -191,7 +191,9 @@ function lazyLoadImages(selector = 'img[data-src]', options = {}) {
  */
 class EventListenerManager {
   constructor() {
-    this.listeners = new Map();
+    // Use WeakMap for element-based tracking to prevent memory leaks
+    this.elementListeners = new WeakMap();
+    this.listenerId = 0;
   }
 
   /**
@@ -204,13 +206,28 @@ class EventListenerManager {
   add(element, event, handler, options = false) {
     if (!element) return;
 
-    const key = this._getKey(element, event, handler);
+    // Get or create listener map for this element
+    let listeners = this.elementListeners.get(element);
+    if (!listeners) {
+      listeners = new Map();
+      this.elementListeners.set(element, listeners);
+    }
+
+    // Create unique key for this listener
+    const key = `${event}_${this.listenerId++}`;
         
-    // Don't add duplicate listeners
-    if (this.listeners.has(key)) return;
+    // Don't add if this exact handler is already registered for this event
+    let alreadyRegistered = false;
+    listeners.forEach((value) => {
+      if (value.event === event && value.handler === handler) {
+        alreadyRegistered = true;
+      }
+    });
+        
+    if (alreadyRegistered) return;
 
     element.addEventListener(event, handler, options);
-    this.listeners.set(key, { element, event, handler, options });
+    listeners.set(key, { event, handler, options });
   }
 
   /**
@@ -222,30 +239,45 @@ class EventListenerManager {
   remove(element, event, handler) {
     if (!element) return;
 
-    const key = this._getKey(element, event, handler);
-    const listener = this.listeners.get(key);
+    const listeners = this.elementListeners.get(element);
+    if (!listeners) return;
 
-    if (listener) {
-      element.removeEventListener(event, handler, listener.options);
-      this.listeners.delete(key);
-    }
+    // Find and remove matching listeners
+    const keysToRemove = [];
+    listeners.forEach((value, key) => {
+      if (value.event === event && value.handler === handler) {
+        element.removeEventListener(event, handler, value.options);
+        keysToRemove.push(key);
+      }
+    });
+
+    keysToRemove.forEach(key => listeners.delete(key));
   }
 
   /**
-     * Remove all tracked listeners
+     * Remove all tracked listeners (requires manual cleanup per element)
      */
   removeAll() {
-    this.listeners.forEach(({ element, event, handler, options }) => {
-      element.removeEventListener(event, handler, options);
-    });
-    this.listeners.clear();
+    // Note: WeakMap cannot be iterated, so we can't automatically clean up all elements
+    // This prevents memory leaks but requires manual cleanup via removeAllForElement()
+    console.warn('EventListenerManager.removeAll(): Use removeAllForElement(element) for specific cleanup');
   }
 
   /**
-     * Generate unique key for listener tracking
+     * Remove all listeners for a specific element
+     * @param {HTMLElement} element - Target element
      */
-  _getKey(element, event, handler) {
-    return `${element.tagName}_${event}_${handler.name || 'anonymous'}`;
+  removeAllForElement(element) {
+    if (!element) return;
+
+    const listeners = this.elementListeners.get(element);
+    if (!listeners) return;
+
+    listeners.forEach((value) => {
+      element.removeEventListener(value.event, value.handler, value.options);
+    });
+
+    this.elementListeners.delete(element);
   }
 }
 

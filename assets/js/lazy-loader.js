@@ -18,9 +18,12 @@ class LazyLibraryLoader {
      */
   async loadScript(name, url, checkFn = null) {
     // Check if already loaded globally
-    if (checkFn && checkFn()) {
-      this.loadedLibraries.set(name, true);
-      return Promise.resolve(checkFn());
+    if (checkFn) {
+      const existingLib = checkFn();
+      if (existingLib) {
+        this.loadedLibraries.set(name, existingLib);
+        return Promise.resolve(existingLib);
+      }
     }
 
     // Check if already loaded via this loader

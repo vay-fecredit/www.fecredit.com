@@ -19,6 +19,7 @@ const backend = {
       const encrypted = localStorage.getItem('loanApplications');
       if (!encrypted) {
         this._cachedApplications = [];
+        this._cacheInvalidated = false;
         return this._cachedApplications;
       }
             
@@ -29,15 +30,31 @@ const backend = {
     } catch (e) {
       // Decryption failed, return empty array
       this._cachedApplications = [];
+      this._cacheInvalidated = false;
       return this._cachedApplications;
     }
   },
     
   saveApplication(data) {
-    // Add to cached applications
-    if (!this._cachedApplications) {
-      this._cachedApplications = this.applications;
+    // Ensure cache is initialized before saving
+    if (!this._cachedApplications || this._cacheInvalidated) {
+      // Load from storage without causing recursion
+      try {
+        const encrypted = localStorage.getItem('loanApplications');
+        if (encrypted) {
+          const decrypted = CryptoJS.AES.decrypt(encrypted, 'shinhan_key').toString(CryptoJS.enc.Utf8);
+          this._cachedApplications = JSON.parse(decrypted || '[]');
+        } else {
+          this._cachedApplications = [];
+        }
+        this._cacheInvalidated = false;
+      } catch (e) {
+        this._cachedApplications = [];
+        this._cacheInvalidated = false;
+      }
     }
+    
+    // Add to cached applications
     this._cachedApplications.push(data);
         
     // Encrypt and save
